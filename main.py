@@ -3,9 +3,6 @@ from datetime import datetime
 import pandas as pd
 
 
-
-
-
 def data_history(): 
     company=['NVDA', 'AAPL', 'TSLA', 'GOOGL']
     tickers=yf.Tickers(company)
@@ -56,5 +53,22 @@ def options_chain():
     print(option_calls)
 
 
+def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'):
+    while True: 
+        ans=input(prompt).lower()
+        if ans in ('1', 'data history', '1. data history'): 
+            return data_history()
+        if ans in ('2', 'company institutional holders', '2. company institutional holders'): 
+            return company_institutional_holders()
+        if ans in ('3', 'cash flow history', '3. cash flow history'):
+            return cash_flow_history()
+        if ans in ('4', 'options chain', '4. options chain'): 
+            return options_chain()
+        else:     
+            retries=retries-1
+            if retries==0:
+                raise ValueError('Invalid request')
+            print(reminder)
 
-company_institutional_holders()
+enter_request('1. Data History, 2. Company Institutional Holders, 3. Cash Flow History, 4. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
+
