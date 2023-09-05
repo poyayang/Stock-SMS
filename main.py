@@ -4,7 +4,7 @@ import pandas as pd
 
 
 def data_history(): 
-    company=['NVDA', 'AAPL', 'TSLA', 'GOOGL']
+    company=input('What companies you would like to look up?')
     tickers=yf.Tickers(company)
     end_date=datetime.now().strftime('%Y-%m-%d')
     company_hist=tickers.history(period='max', start='2023-08-01', end=end_date, interval='1h')
