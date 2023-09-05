@@ -3,6 +3,9 @@ from datetime import datetime
 import pandas as pd
 
 
+
+
+
 def data_history(): 
     company=['NVDA', 'AAPL', 'TSLA', 'GOOGL']
     tickers=yf.Tickers(company)
@@ -16,7 +19,7 @@ def data_history():
 
 def company_institutional_holders(): 
     holders_data={}
-    company=company=input("Enter company stock code: ").split() # split() works for both singular and multiple codes
+    company=input("Enter company stock code: ").split() # split() works for both singular and multiple codes
     for holders in company: 
         ticker=yf.Ticker(holders)
         holders_data[holders]=ticker.get_institutional_holders()
