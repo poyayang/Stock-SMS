@@ -3,6 +3,15 @@ from datetime import datetime
 import pandas as pd
 
 
+def current_price():
+    company=input('What company would you like to look up?').upper()
+    tickers=yf.Ticker(company)
+    company_hist=pd.DataFrame(tickers.history(period='1d'))
+    info_needed=company_hist[['Open', 'High', 'Low', 'Close']]
+    reframe_hist=info_needed.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
+    print(reframe_hist)
+
+
 def data_history(): 
     company=input('What companies you would like to look up?')
     tickers=yf.Tickers(company)
@@ -56,13 +65,15 @@ def options_chain():
 def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'):
     while True: 
         ans=input(prompt).lower()
-        if ans in ('1', 'data history', '1. data history'): 
+        if ans in ('1.', 'current price', '1. current price'):
+            return current_price()
+        if ans in ('2', 'data history', '1. data history'): 
             return data_history()
-        if ans in ('2', 'company institutional holders', '2. company institutional holders'): 
+        if ans in ('3', 'company institutional holders', '2. company institutional holders'): 
             return company_institutional_holders()
-        if ans in ('3', 'cash flow history', '3. cash flow history'):
+        if ans in ('4', 'cash flow history', '3. cash flow history'):
             return cash_flow_history()
-        if ans in ('4', 'options chain', '4. options chain'): 
+        if ans in ('5', 'options chain', '4. options chain'): 
             return options_chain()
         else:     
             retries=retries-1
@@ -70,5 +81,7 @@ def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'
                 raise ValueError('Invalid request')
             print(reminder)
 
-enter_request('1. Data History, 2. Company Institutional Holders, 3. Cash Flow History, 4. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
+
+enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
+       
 
