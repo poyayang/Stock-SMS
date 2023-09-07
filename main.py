@@ -90,7 +90,7 @@ def sms_response():
 # enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
        
 from flask import Flask, request
-from twilio import twiml
+from twilio.twiml.messaging_response import Message, MessagingResponse
 
 app=Flask(__name__)
 
@@ -98,9 +98,14 @@ app=Flask(__name__)
 def sms(): 
     number=request.form['From']
     message_body=request.form['Body']
-    response=twiml.Response()
-    response.message(sms_response.format(number, message_body))
+    response=MessagingResponse()
+    response.message('Hello {}, you said: {}'.format(number, message_body))
     return str(response)
+
+#@app.route('/hello', methods=['GET'])
+#def hell_world():
+#    a='hello world'
+#    return a
 
 if __name__=='__main__':
     app.run()
