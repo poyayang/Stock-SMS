@@ -81,10 +81,10 @@ def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'
                 raise ValueError('Invalid request')
             print(reminder)
 
-def sms_response():
+def sms_response(self):
     prompt='1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you to know? '
     content=enter_request(prompt)
-    return content
+    return str(content)
 
 
 # enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
@@ -98,8 +98,9 @@ app=Flask(__name__)
 def sms(): 
     number=request.form['From']
     message_body=request.form['Body']
+    message_content=sms_response(message_body)
     response=MessagingResponse()
-    response.message('Hello {}, you said: {}'.format(number, message_body))
+    response.message('Hello {}, you said: {}'.format(number, message_content))
     return str(response)
 
 #@app.route('/hello', methods=['GET'])
