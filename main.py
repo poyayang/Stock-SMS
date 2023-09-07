@@ -65,7 +65,7 @@ def options_chain():
 def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'):
     while True: 
         ans=input(prompt).lower()
-        if ans in ('1.', 'current price', '1. current price'):
+        if ans in ('1', 'current price', '1. current price'):
             return current_price()
         if ans in ('2', 'data history', '1. data history'): 
             return data_history()
@@ -81,7 +81,29 @@ def enter_request(prompt, retries=4, reminder='Invalid input, please try again.'
                 raise ValueError('Invalid request')
             print(reminder)
 
+def sms_response():
+    prompt='1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you to know? '
+    content=enter_request(prompt)
+    return content
 
-enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
+
+# enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
        
+from flask import Flask, request
+from twilio import twiml
+
+app=Flask(__name__)
+
+@app.route('/sms', methods=['POST'])
+def sms(): 
+    number=request.form['From']
+    message_body=request.form['Body']
+    response=twiml.Response()
+    response.message(sms_response.format(number, message_body))
+    return str(response)
+
+if __name__=='__main__':
+    app.run()
+
+
 
