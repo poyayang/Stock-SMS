@@ -1,16 +1,10 @@
 import yfinance as yf
 from datetime import datetime
-import pandas as pd
 
+company=input('Please enter the stock code').upper()
+tickers=yf.Ticker(company)
+company_hist=tickers.history(period='1d')
+info_needed=company_hist[['Open', 'High', 'Low', 'Close']]
+reframe_hist=info_needed.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
 
-company=['NVDA', 'AAPL', 'TSLA', 'GOOGL']
-
-holders_data={}
-for holders in company: 
-    ticker=yf.Ticker(holders)
-    holders_data[holders]=ticker.get_cashflow()
-
-for holders, holders_df in holders_data.items():
-    print(f'Institutional Holders for {holders}: \n')
-    print(holders_df)
-    print('='*100)
+print(reframe_hist)
