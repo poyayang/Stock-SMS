@@ -1,6 +1,7 @@
 import yfinance as yf
 from datetime import datetime
 import pandas as pd
+import math
 
 def current_price():
     company=input('What company would you like to look up?').upper()
@@ -12,12 +13,11 @@ def current_price():
 
 
 def data_history(): 
-    company=input('What companies you would like to look up?')
-    tickers=yf.Tickers(company)
+    company=input('What company you would like to look up?')
+    tickers=yf.Ticker(company)
     end_date=datetime.now().strftime('%Y-%m-%d')
     company_hist=tickers.history(period='max', start='2023-08-01', end=end_date, interval='1h')
-    reframe_hist=company_hist.stack(level=1).rename_axis(['Date', 'Ticker']).reset_index(level=1)
-
+    reframe_hist=company_hist.stack(level=0).rename_axis(['Date', 'Ticker']).reset_index(level=1)
     print(reframe_hist)
 
 
@@ -87,3 +87,4 @@ def sms_response(self):
 
 
 # enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
+company_institutional_holders()
