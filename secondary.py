@@ -85,5 +85,7 @@ def sms_response(self):
     content=enter_request(prompt)
     return str(content)
 
+def test_upload(): 
+    print('Hello World')
 
 # enter_request('1. Current Price, 2. Data History, 3. Company Institutional Holders, 4. Cash Flow History, 5. Options Chain, what would you like to know? ', retries=4, reminder='Please try again.')
