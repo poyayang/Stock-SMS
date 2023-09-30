@@ -44,6 +44,7 @@ pandas==2.0.2
 pathlib==1.0.1
 pathspec==0.11.1
 Pillow==9.5.0
+pip-upgrade-tool @ git+https://github.com/realiti4/pip-upgrade.git@e6f1242702db1ae404dc6bab5a7aadab4aedff17
 platformdirs==3.8.1
 pluggy==1.2.0
 py-openaq==1.1.0
