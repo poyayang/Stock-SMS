@@ -1,7 +1,6 @@
 import yfinance as yf
 from datetime import datetime
 import pandas as pd
-import math
 
 def current_price():
     company=input('What company would you like to look up?').upper()
