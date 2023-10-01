@@ -1,5 +1,5 @@
 import unittest
-import calc
+#import calc
 import yfinance as yf
 from datetime import datetime
 import pandas as pd
