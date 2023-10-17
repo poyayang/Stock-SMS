@@ -3,6 +3,7 @@
 The project is to create an automation for users get to know latest stock prices.
 
 In this project, Render is the Python Host to deploy the project automation.
+
 Preparation
 1.	Make sure that Flask is imported to the main file
  from flask import Flask, request
