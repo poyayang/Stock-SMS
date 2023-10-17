@@ -24,3 +24,10 @@ Build Command - pip install -r requirements.txt
 Start Command - python app.py (the main file of the project)
 7.	Hit ‘Create Web Service”
 
+
+https://github.com/poyayang/stock_tickers/assets/136909810/a4215440-e25e-4684-ade8-769b42f540c5
+
+
+
+
+
