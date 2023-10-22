@@ -1,42 +1,43 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import yfinance as yf
+import pandas as pd
+from datetime import datetime
 
-app=Flask(__name__)
-
-@app.route('/sms', methods=['POST'])
-def sms(): 
-    number=request.form['From']
-    message_body=request.form['Body']
-    
-    tickers=yf.Ticker(message_body)
-    company_hist=tickers.history(period='1d')
-    info_needed=company_hist[['Open', 'High', 'Low', 'Close']]
-    data_list=[]
-    for index, row in info_needed.iterrows():
-        data_dict={'Date': index.strftime('%Y-%m-%d'), 
-                   'Ticker': message_body.upper(), 
-                   'Open': f"{row['Open']:.2f}",   
-                   'High': f"{row['High']:.2f}",
-                   'Low': f"{row['Low']:.2f}",
-                   'Close': f"{row['Close']:.2f}"} # f"{a:.2f}" <----- to get first 2 decimal by using f-string
-        data_list.append(data_dict)
-    response_content='Hello {}, here is the stock info:\n'.format(number)
-    for data in data_list:
-        response_content += 'Date: {}\nTicker: {}\nOpen: {}\nHigh: {}\nLow: {}\nClose: {}\n\n'.format(
-        data['Date'], data['Ticker'], data['Open'], data['High'], data['Low'], data['Close'])
-
-    response=MessagingResponse()
-    response.message(response_content)
-    return str(response)
-
-#@app.route('/hello', methods=['GET'])
-#def hell_world():
-#    a='hello world'
-#    return a
-
-if __name__=='__main__':
-    app.run(host='0.0.0.0', port=80)
+app = Flask(__name__)
 
 
+@app.route("/sms", methods=["POST"])
+def sms() -> str:
+    number = request.form["From"]
+    stock_symbol = request.form["Body"]
+    stock_prices = get_stock_price(stock_symbol)
+    message = message_structure(stock_prices, stock_symbol, number)
+    return message
 
+
+def get_stock_price(company: str) -> dict:
+    tickers = yf.Ticker(company)
+    company_hist = tickers.history(period="1d")
+    prices = company_hist[["Open", "High", "Low", "Close"]]
+    price = {
+        "Date": datetime.now().strftime("%Y-%m-%d"),
+        "Open": prices["Open"].values[0],
+        "Close": prices["Close"].values[0],
+        "High": prices["High"].values[0],
+        "Low": prices["Low"].values[0],
+    }
+
+    return price
+
+
+def message_structure(
+    date: datetime, ticker: str, open: float, close: float, high: float, low: float
+) -> str:
+    strdate = str(date.strftime("%y-%m-%d"))
+    message = f"Date:{strdate}\nCompany:{ticker}\nOpen:{open}\nClose:{close}\nHigh:{high}\nLow:{low}"
+    return message
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80)
