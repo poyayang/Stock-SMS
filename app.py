@@ -13,7 +13,9 @@ def sms() -> str:
     stock_symbol = request.form["Body"]
     stock_prices = get_stock_price(stock_symbol)
     message = message_structure(stock_prices, stock_symbol, number)
-    return message
+    resp = MessagingResponse()
+    resp.message(message)
+    return str(resp)
 
 
 def get_stock_price(company: str) -> dict:
