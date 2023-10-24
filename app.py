@@ -12,7 +12,7 @@ def sms() -> str:
     number = request.form["From"]
     stock_symbol = request.form["Body"]
     stock_prices = get_stock_price(stock_symbol)
-    message = message_structure(stock_prices, stock_symbol, number)
+    message = message_structure(stock_prices)
     resp = MessagingResponse()
     resp.message(message)
     return str(resp)
