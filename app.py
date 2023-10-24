@@ -18,9 +18,6 @@ def sms() -> str:
     return str(resp)
 
 
-sms()
-
-
 def get_stock_price(company: str) -> dict:
     tickers = yf.Ticker(company)
     company_hist = tickers.history(period="1d")
@@ -46,3 +43,4 @@ def message_structure(
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80)
+    app.app_context().push()
