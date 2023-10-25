@@ -1,7 +1,8 @@
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import yfinance as yf
-import pandas as pd
+
+# import pandas as pd
 from datetime import datetime
 
 app = Flask(__name__)
@@ -29,7 +30,6 @@ def get_stock_price(company: str) -> dict:
         "High": prices["High"].values[0],
         "Low": prices["Low"].values[0],
     }
-
     return price
 
 
