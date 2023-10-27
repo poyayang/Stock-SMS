@@ -43,7 +43,7 @@ def get_stock_price(company: str) -> dict:
 def message_structure(
     date: date, ticker: str, open: float, close: float, high: float, low: float
 ) -> str:
-    strdate = str(date.strftime("%y-%m-%d"))
+    strdate = date.strftime("%y-%m-%d")
     message = f"Date:{strdate}\nCompany:{ticker}\nOpen:{open}\nClose:{close}\nHigh:{high}\nLow:{low}"
     return message
 
