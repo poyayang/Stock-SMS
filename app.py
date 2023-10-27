@@ -14,7 +14,7 @@ def sms() -> str:
     stock_symbol = request.form["Body"]
     stock_prices = get_stock_price(stock_symbol)
     message = message_structure(
-        datetime.today,
+        datetime.today(),
         stock_symbol,
         stock_prices["Open"],
         stock_prices["Close"],
