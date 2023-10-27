@@ -13,7 +13,14 @@ def sms() -> str:
     number = request.form["From"]
     stock_symbol = request.form["Body"]
     stock_prices = get_stock_price(stock_symbol)
-    message = message_structure(lambda: stock_prices)
+    message = message_structure(
+        datetime.today,
+        stock_symbol,
+        stock_prices["Open"],
+        stock_prices["Close"],
+        stock_prices["High"],
+        stock_prices["Low"],
+    )
     resp = MessagingResponse()
     resp.message(message)
     return str(resp)
