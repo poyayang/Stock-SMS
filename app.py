@@ -1,4 +1,5 @@
 from flask import Flask, request
+import logging
 from twilio.twiml.messaging_response import MessagingResponse
 import yfinance as yf
 
@@ -12,6 +13,12 @@ app = Flask(__name__)
 def sms() -> str:
     number = request.form["From"]
     stock_symbol = request.form["Body"]
+    logging.info(f"received request from {number}: {stock_symbol}")
+    message = handle_sms(stock_symbol)
+    return message
+
+
+def handle_sms(stock_symbol: str) -> str:
     stock_prices = get_stock_price(stock_symbol)
     message = message_structure(
         date.today(),
