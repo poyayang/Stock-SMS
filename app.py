@@ -49,7 +49,7 @@ def message_structure(
     date: date, ticker: str, open: float, close: float, high: float, low: float
 ) -> str:
     strdate = date.strftime("%y-%m-%d")
-    message = f"Date:{strdate}\nCompany:{ticker}\nOpen:{open}\nClose:{close}\nHigh:{high}\nLow:{low}"
+    message = f"Date:{strdate}\nCompany:{ticker}\nOpen:{open:.2f}\nClose:{close:.2f}\nHigh:{high:.2f}\nLow:{low:.2f}"
     return message
 
 

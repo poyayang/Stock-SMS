@@ -12,7 +12,7 @@ class TestApp(unittest.TestCase):
 
     def test_message_structure(self):
         date = datetime.now()
-        message_structure(date, "Tsla", 200.01, 300.03, 400.04, 500.05)
+        message_structure(date, "Tsla", 200.01563, 300.030967, 400.04879, 500.05267)
 
 
 if __name__ == "__main__":
