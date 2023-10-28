@@ -1,9 +1,9 @@
 import unittest
-from app import *
 from datetime import datetime
+from app import handle_sms, get_stock_price, message_structure
 
 
-class TestCalc(unittest.TestCase):
+class TestApp(unittest.TestCase):
     def test_handle_sms(self):
         handle_sms("tsla")
 

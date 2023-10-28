@@ -1,9 +1,7 @@
-from flask import Flask, request
+import yfinance as yf
 import logging
 from twilio.twiml.messaging_response import MessagingResponse
-import yfinance as yf
-
-# import pandas as pd
+from flask import Flask, request
 from datetime import date
 
 app = Flask(__name__)
