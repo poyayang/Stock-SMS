@@ -17,38 +17,38 @@ def sms() -> str:
 
 
 def handle_sms(stock_symbol: str) -> str:
-    stock_prices = get_stock_price(stock_symbol)
+    date, open, close, high, low = get_stock_price(stock_symbol)
     message = message_structure(
-        date.today(),
+        date,
         stock_symbol,
-        stock_prices["Open"],
-        stock_prices["Close"],
-        stock_prices["High"],
-        stock_prices["Low"],
+        open,
+        close,
+        high,
+        low,
     )
     resp = MessagingResponse()
     resp.message(message)
     return str(resp)
 
 
-def get_stock_price(company: str) -> dict:
+def get_stock_price(company: str):
     tickers = yf.Ticker(company)
     company_hist = tickers.history(period="1d")
     prices = company_hist[["Open", "High", "Low", "Close"]]
-    price = {
-        "Date": date.today().strftime("%y-%m-%d"),
-        "Open": prices["Open"].values[0],
-        "Close": prices["Close"].values[0],
-        "High": prices["High"].values[0],
-        "Low": prices["Low"].values[0],
-    }
-    return price
+
+    stock_date = date.today()
+    open = prices["Open"].values[0]
+    close = prices["Close"].values[0]
+    high = prices["High"].values[0]
+    low = prices["Low"].values[0]
+
+    return stock_date, open, close, high, low
 
 
 def message_structure(
-    date: date, ticker: str, open: float, close: float, high: float, low: float
+    stock_date: date, ticker: str, open: float, close: float, high: float, low: float
 ) -> str:
-    strdate = date.strftime("%y-%m-%d")
+    strdate = stock_date.strftime("%y-%m-%d")
     message = f"Date:{strdate}\nCompany:{ticker}\nOpen:{open:.2f}\nClose:{close:.2f}\nHigh:{high:.2f}\nLow:{low:.2f}"
     return message
 
