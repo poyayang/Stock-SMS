@@ -26,8 +26,7 @@ Start Command - python app.py (the main file of the project)
 5.	Hit `Create Web Service`
 
 
-https://github.com/poyayang/stock_tickers/assets/136909810/a4215440-e25e-4684-ade8-769b42f540c5
-
+https://github.com/poyayang/stock_tickers/assets/136909810/d70559e1-3db6-4b1a-a204-fe56dbb7af1f
 
 
 
