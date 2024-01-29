@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 @app.route("/sms", methods=["POST"])
 def sms() -> str:
-    number = request.form["From"]
-    stock_symbol = request.form["Body"]
+    number = request.form.get["From"]
+    stock_symbol = request.form.get["Body"]
     logging.info(f"received request from {number}: {stock_symbol}")
     message = handle_sms(stock_symbol)
     return message
