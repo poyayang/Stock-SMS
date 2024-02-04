@@ -22,6 +22,10 @@ def render_get() -> str:
     return get_slash
 
 
+@app.route("/", methods=["POST"])
+def render_post() -> str:
+    return "OK"
+
 def handle_sms(stock_symbol: str) -> str:
     date, open, close, high, low = get_stock_price(stock_symbol)
     message = message_structure(
